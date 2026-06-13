@@ -11,16 +11,17 @@ const app = express();
 
 const allowedOrigins = [
   process.env.FRONTEND_URL,
-  "https://offerlette-decoder.pages.dev",
+  "https://lex-anlaytics.pages.dev",
   "http://localhost:5173",
 ].filter(Boolean);
-
 app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
-      callback(new Error("CORS not allowed"));
+      callback(new Error(`CORS not allowed for origin: ${origin}`));
     },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
